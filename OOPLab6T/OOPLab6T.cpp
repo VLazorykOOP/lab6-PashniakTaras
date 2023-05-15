@@ -1,306 +1,383 @@
-﻿// OOPLab3Tpl.cpp : Цей файл містить є шаблоном для 
-// виконання лаб. роботи №6. 
-// Він містинь функцію "main" з якої починається та закінчується виконання програми.
-//
-#include<iostream>
-#include <string>
+﻿#pragma once
+#include <iostream>
+#include <cstring>
 using namespace std;
 
+template <typename T>
+T minElement(T* arr, int size)
+{
+    T minElem = arr[0];
+    for (int i = 1; i < size; i++)
+        if (arr[i] < minElem)
+            minElem = arr[i];
 
-class Base {
-protected:
-    int dat;
-public:
-    Base() :dat(1) {}
-    Base(int d) :dat(d) {}
-};
+    return minElem;
+}
 
-class D1 :protected Base {
-protected:
-    int d1;
-public:
-    D1() :d1(1) {}
-    D1(int d) :d1(d) {}
-    D1(int a, int b) :Base(a), d1(b) {}
-};
-class D2 :protected Base {
-protected:
-    int d2;
-public:
-    D2() :d2(1) {}
-    D2(int d) :d2(d) {}
-    D2(int a, int b) :Base(a), d2(b) {}
-};
-class D3 : protected D1 {
-protected:
-    int d3;
-public:
-    D3() :d3(1) {}
-    D3(int d) :d3(d) {}
-    D3(int a, int b, int c) : D1(a, b), d3(c) {}
-};
-class D4 :protected D3 {
-protected:
-    int d4;
-public:
-    D4() :d4(1) {}
-    D4(int d) :d4(d) {}
-    D4(int a, int b, int c, int d) :D3(a, b, c), d4(d) {}
-};
-class D5 :protected D2, protected D3 {
-protected:
-    int d5;
-public:
-    D5() :d5(1) {}
-    D5(int d) :d5(d) {}
-    D5(int a, int b, int c, int d, int e, int f) :D2(a, b), D3(c, d, e), d5(f) {}
-};
+template<>
+char minElement(char* arr, int size)
+{
+    char minElem = arr[0];
+    for (int i = 1; i < size; i++)
+        if (arr[i] < minElem)
+            minElem = arr[i];
 
-class VD1 :virtual protected Base {
-protected:
-    int d1;
-public:
-    VD1() :d1(1) {}
-    VD1(int d) :d1(d) {}
-    VD1(int a, int b) :Base(a), d1(b) {}
-};
-class VD2 :virtual protected Base {
-protected:
-    int d2;
-public:
-    VD2() :d2(1) {}
-    VD2(int d) :d2(d) {}
-    VD2(int a, int b) :Base(a), d2(b) {}
-};
-class VD3 :virtual protected VD1 {
-protected:
-    int d3;
-public:
-    VD3() :d3(1) {}
-    VD3(int d) :d3(d) {}
-    VD3(int a, int b, int c) : VD1(a, b), d3(c) {}
-};
-class VD4 :virtual protected VD3 {
-protected:
-    int d4;
-public:
-    VD4() :d4(1) {}
-    VD4(int d) :d4(d) {}
-    VD4(int a, int b, int c, int d) :VD3(a, b, c), d4(d) {}
-};
-class VD5 :virtual protected VD2, virtual protected VD3 {
-protected:
-    int d5;
-public:
-    VD5() :d5(1) {}
-    VD5(int d) :d5(d) {}
-    VD5(int a, int b, int c, int d, int e, int f) :VD2(a, b), VD3(c, d, e), d5(f) {}
-};
+    return minElem;
+}
+void Task1Char()
+{
+    int size = 0;
+    cout << "Input size: ";
+    cin >> size;
+    char* arr{ new char[size] };
 
-void Ex1() {
-    Base b;
-    D1 d1;
-    D2 d2;
-    D3 d3;
-    D4 d4;
-    D5 d5;
+    cout << "Input array:" << endl;
+    for (int i = 0; i < size; i++)
+    {
+        cout << "Input [ " << i + 1 << " ] element: ";
+        cin >> arr[i];
+    }
 
-    VD1 vd1;
-    VD2 vd2;
-    VD3 vd3;
-    VD4 vd4;
-    VD5 vd5;
-    
-    cout << "----Test----\n";
-    cout << "Size of Base: " << sizeof(b) << endl;
-    cout << "Size of D1: " << sizeof(d1) << endl;
-    cout << "Size of D2: " << sizeof(d2) << endl;
-    cout << "Size of D3: " << sizeof(d3) << endl;
-    cout << "Size of D4: " << sizeof(d4) << endl;
-    cout << "Size of D5: " << sizeof(d5) << endl;
-    cout << "Size of VD1: " << sizeof(vd1) << endl;
-    cout << "Size of VD2: " << sizeof(vd2) << endl;
-    cout << "Size of VD3: " << sizeof(vd3) << endl;
-    cout << "Size of VD4: " << sizeof(vd4) << endl;
-    cout << "Size of VD5: " << sizeof(vd5) << endl;
+    char minElem = minElement(arr, size);
+    cout << "Minimum element: " << minElem << endl;
+}
+void Task1AllType()
+{
+    int size = 0;
+    cout << "Input size: ";
+    cin >> size;
+    double* arr{ new double[size] };
 
+    cout << "Input array:" << endl;
+    for (int i = 0; i < size; i++)
+    {
+        cout << "Input [ " << i + 1 << " ] element: ";
+        cin >> arr[i];
+    }
+
+    double minElem = minElement(arr, size);
+    cout << "Minimum element: " << minElem << endl;
+}
+void Ex1()
+{
+    int select = 0;
+    do
+    {
+        cout << endl;
+        cout << "Menu | Select options" << endl;
+        cout << "1. Another type " << endl;
+        cout << "2. Char " << endl;
+        cout << "0. Exit" << endl;
+        cin >> select;
+
+
+        switch (select)
+        {
+        case 1:
+            
+            Task1AllType();
+            break;
+        case 2:
+            
+            Task1Char();
+            break;
+        default:
+            
+            break;
+        }
+    } while (select != 0);
 }
 
 
-class Figure {
+
+
+template <typename T>
+class ListNode
+{
 public:
-    virtual double perimeter() = 0;
+    T data;
+    ListNode* next;
+
+    ListNode(T val) : data(val), next(nullptr) {}
 };
 
-class Rectangle : public Figure {
+template <typename T>
+class List
+{
 private:
-    double width, length;
+    ListNode<T>* head;
+    ListNode<T>* tail;
+    int size;
+
 public:
-    Rectangle(double w, double l) {
-        width = w;
-        length = l;
+    List() : head(nullptr), tail(nullptr), size(0) {}
+
+    void add(T val)
+    {
+        ListNode<T>* node = new ListNode<T>(val);
+
+        if (head == nullptr) {
+            head = node;
+            tail = node;
+        }
+        else {
+            tail->next = node;
+            tail = node;
+        }
+
+        size++;
     }
-    double perimeter() {
-        return 2 * (width + length);
+
+    T get(int index)
+    {
+        if (index < 0 || index >= size)
+            return 0;
+
+        ListNode<T>* current = head;
+        for (int i = 0; i < index; i++)
+        {
+            current = current->next;
+        }
+        return current->data;
+    }
+
+    int getSize()
+    {
+        return size;
+    }
+
+    class Iterator
+    {
+    private:
+        ListNode<T>* current; //поточний вказівник на вузол
+
+    public:
+        Iterator(ListNode<T>* node) : current(node) {}
+
+        Iterator& operator++()
+        {
+            current = current->next;
+            return *this;
+        }
+
+        bool operator!=(const Iterator& other) const
+        {
+            return current != other.current;
+        }
+
+        T& operator*()
+        {
+            return current->data;
+        }
+    };
+
+    Iterator begin()
+    {
+        return Iterator(head);
+    }
+
+    Iterator end()
+    {
+        return Iterator(nullptr);
     }
 };
-class Circle : public Figure {
-private:
-    double radius;
-public:
-    Circle(double r) {
-        radius = r;
+void Ex4()
+{
+    int sz, l;
+    cout << "Input number of lists: "; cin >> sz;
+    List<int> lst;
+    for (int i = 0; i < sz; i++) {
+        cout << "Input list [" << i+1 << "]: "; cin >> l;
+        lst.add(l);
+
     }
-    double perimeter() {
-        return 2 * 3.14159 * radius;
+    
+    
+
+    for (auto it = lst.begin(); it != lst.end(); ++it)
+        cout << *it << "\t";
+    cout << endl;
+}
+
+template <class T>
+class Matrix {
+private:
+    T** matrix;
+    int rows, cols;
+
+public:
+    Matrix(int r = 0, int c = 0) : rows(r), cols(c) {
+        matrix = new T * [rows];
+        for (int i = 0; i < rows; i++) {
+            matrix[i] = new T[cols];
+        }
+    }
+
+    Matrix(const Matrix& m) : rows(m.rows), cols(m.cols) {
+        matrix = new T * [rows];
+        for (int i = 0; i < rows; i++) {
+            matrix[i] = new T[cols];
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = m.matrix[i][j];
+            }
+        }
+    }
+
+    ~Matrix() {
+        for (int i = 0; i < rows; i++) {
+            delete[] matrix[i];
+        }
+        delete[] matrix;
+    }
+
+    Matrix& operator=(const Matrix& m) {
+        if (this != &m) {
+            for (int i = 0; i < rows; i++) {
+                delete[] matrix[i];
+            }
+            delete[] matrix;
+
+            rows = m.rows;
+            cols = m.cols;
+
+            matrix = new T * [rows];
+            for (int i = 0; i < rows; i++) {
+                matrix[i] = new T[cols];
+                for (int j = 0; j < cols; j++) {
+                    matrix[i][j] = m.matrix[i][j];
+                }
+            }
+        }
+
+        return *this;
+    }
+
+    T* operator[](int index) const {
+        return matrix[index];
+    }
+
+    Matrix operator+(const Matrix& m) const {
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result.matrix[i][j] = matrix[i][j] + m.matrix[i][j];
+            }
+        }
+        return result;
+    }
+
+    Matrix& operator+=(const Matrix& m) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] += m.matrix[i][j];
+            }
+        }
+        return *this;
     }
 };
-class RightTriangle : public Figure {
-private:
-    double side1, side2, hypotenuse;
-public:
-    RightTriangle(double s1, double s2) {
-        side1 = s1;
-        side2 = s2;
-        hypotenuse = sqrt(s1 * s1 + s2 * s2);
+void Ex3() {
+    Matrix<int> a(2, 2);
+    Matrix<int> b(2, 2);
+
+    a[0][0] = 1;
+    a[0][1] = 2;
+    a[1][0] = 3;
+    a[1][1] = 4;
+
+    b[0][0] = 5;
+    b[0][1] = 6;
+    b[1][0] = 7;
+    b[1][1] = 8;
+
+    Matrix<int> c = a + b;
+
+    cout << "a:\n";
+    cout << a[0][0] << " " << a[0][1] << "\n";
+    cout << a[1][0] << " " << a[1][1] << "\n\n";
+
+    cout << "b:\n";
+    cout << b[0][0] << " " << b[0][1] << "\n";
+    cout << b[1][0] << " " << b[1][1] << "\n\n";
+
+    cout << "a + b:\n";
+    cout << c[0][0] << " " << c[0][1] << "\n";
+    cout << c[1][0] << " " << c[1][1] << "\n\n";
+
+    cout << "a += b:\n";
+    cout << a[0][0] << " " << a[0][1] << "\n";
+    cout << a[1][0] << " " << a[1][1] << "\n\n";
+}
+
+
+
+template <typename T>
+void sort(T array[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (array[j] < array[i]) {
+                T temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
     }
-    double perimeter() {
-        return side1 + side2 + hypotenuse;
+}
+
+template <typename T>
+int binarySearch(T array[], int size, T key) {
+    int low = 0;
+    int high = size - 1;
+    while (low <= high) {
+        int middle = (low + high) / 2;
+        if (array[middle] == key) {
+            return middle;
+        }
+        else if (key < array[middle]) {
+            high = middle - 1;
+        }
+        else {
+            low = middle + 1;
+        }
     }
-};
-class Trapezoid : public Figure {
-private:
-    double side1, side2, height, base;
-public:
-    Trapezoid(double s1, double s2, double h, double b) {
-        side1 = s1;
-        side2 = s2;
-        height = h;
-        base = b;
+    return -1;
+}
+
+template <>
+void sort<char*>(char* array[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (strcmp(array[j], array[i]) < 0) {
+                char* temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
     }
-    double perimeter() {
-        return side1 + side2 + 2 * base;
-    }
-};
+}
 
 void Ex2() {
-    Rectangle r(4, 6);
-    Circle c(3);
-    RightTriangle t(3, 4);
-    Trapezoid p(4, 6, 5, 8);
+    cout << "Test: " << "\n";
+    int intArray[] = { 4, 2, 5, 1, 3 };
+    sort(intArray, 5);
+    cout << "Index of number 5 in intArray: " << binarySearch(intArray, 5, 5) << "\n";
 
-    // Test
-    Figure* arr[4];
-    arr[0] = &r;
-    arr[1] = &c;
-    arr[2] = &t;
-    arr[3] = &p;
+    double doubleArray[] = { 1.5, 3.2, 2.0, 4.6, 0.9 };
+    sort(doubleArray, 5);
+    cout << "Index of number 2.0 in doubleArray: " << binarySearch(doubleArray, 5, 2.0) << "\n";
 
-    for (int i = 0; i < 4; i++) {
-        cout << "Perimeter of figure " << i + 1 << ": " << arr[i]->perimeter() << endl;
-    }
+    /*char* stringArray[] = {"hello", "world", "apple", "orange", "banana"};
+    sort(stringArray, 5);
+    cout << "Index of string 'apple' in stringArray: " << binarySearch(stringArray, 5, "apple") << "\n";*/
 
 }
 
-
-class Person {
-protected:
-    string name;
-public:
-    Person(string n) : name(n) {}
-    virtual ~Person() {}
-    virtual void info() { cout << "Person: " << name << endl; }
-    friend ostream& operator<<(ostream& os, const Person& p) {
-        os << "Person: " << p.name;
-        return os;
-    }
-    friend istream& operator>>(istream& is, Person& p) {
-        is >> p.name;
-        return is;
-    }
-};
-
-class Woman : public Person {
-public:
-    Woman(string n) : Person(n) {}
-    ~Woman() {}
-    void info() { cout << "Woman: " << name << endl; }
-    friend ostream& operator<<(ostream& os, const Woman& w) {
-        os << "Woman: " << w.name;
-        return os;
-    }
-    friend istream& operator>>(istream& is, Woman& w) {
-        is >> w.name;
-        return is;
-    }
-};
-
-class Employee {
-protected:
-    string jobTitle;
-public:
-    Employee(string j) : jobTitle(j) {}
-    virtual ~Employee() {}
-    virtual void info() { cout << "Employee: " << jobTitle << endl; }
-    friend ostream& operator<<(ostream& os, const Employee& e) {
-        os << "Employee: " << e.jobTitle;
-        return os;
-    }
-    friend istream& operator>>(istream& is, Employee& e) {
-        is >> e.jobTitle;
-        return is;
-    }
-};
-
-class WomanEmployee : public Woman, public Employee {
-public:
-    WomanEmployee(string n, string j) :
-        Woman(n), Employee(j) {}
-    ~WomanEmployee() {}
-    void info() { cout << "WomanEmployee: " << name << ", " << jobTitle << endl; }
-    friend ostream& operator<<(ostream& os, const WomanEmployee& w) {
-        os << "WomanEmployee: " << w.name << ", " << w.jobTitle;
-        return os;
-    }
-    friend istream& operator>>(istream& is, WomanEmployee& w) {
-        is >> w.name;
-        is >> w.jobTitle;
-        return is;
-    }
-};
-
-
-void Ex3()
-{
-    Woman W1("Alice");
-    cout << W1 << endl;
-    cout << "Change name: ";
-    cin >> W1;
-    W1.info();
-
-    Employee E1("Engineer");
-    cout << E1 << endl;
-    cout << "Change occupation: ";
-    cin >> E1;
-    E1.info();
-
-    WomanEmployee WE1("Anna", "Manager");
-    cout << WE1 << endl;
-    cout << "Change emploee`s info: ";
-    cin >> WE1;
-    WE1.info();
-
-}
-
-#include "Lab6Example.h"
-int main()
-{
-    cout << " Lab #6  !\n";
+int main() {
+    cout << " Lab #7  !\n";
     //  Код виконання завдань
     //  Головне меню завдань
     //  Функції та класи можуть знаходитись в інших файлах проекту
     int a;
-    cout << "Choose the exercise:" << endl;
+    cout << "Choose the exercise: ";
     cin >> a;
     if (a == 1) {
         Ex1();
@@ -312,8 +389,7 @@ int main()
         Ex3();
     }
     if (a == 4) {
-        Example();
+        Ex4();
     }
     return 0;
-
 }
