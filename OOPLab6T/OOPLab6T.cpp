@@ -17,31 +17,42 @@ T minElement(T* arr, int size)
 template <>
 char* minElement<char*>(char** arr, int size) {
     char* minElem = arr[0];
+    size_t minElemLen = strlen(minElem);
     for (int i = 1; i < size; i++) {
-        if (strcmp(arr[i], minElem) < 0) {
+        size_t curLen = strlen(arr[i]);
+        if (curLen < minElemLen) {
             minElem = arr[i];
+            minElemLen = curLen;
         }
     }
     return minElem;
 }
+
 
 void Task1Char()
 {
     int size = 0;
     cout << "Input size: ";
     cin >> size;
-    char* arr{ new char[size] };
+    char** arr{ new char*[size] };
 
     cout << "Input array:" << endl;
     for (int i = 0; i < size; i++)
     {
+        arr[i] = new char[100];
         cout << "Input [ " << i + 1 << " ] element: ";
         cin >> arr[i];
     }
 
-    char minElem = minElement(arr, size);
+    char* minElem = minElement<char*>(arr, size);
     cout << "Minimum element: " << minElem << endl;
+
+    for (int i = 0; i < size; i++) {
+        delete[] arr[i];
+    }
+    delete[] arr;
 }
+
 void Task1AllType()
 {
     int size = 0;
@@ -61,14 +72,11 @@ void Task1AllType()
 }
 void Ex1()
 {
-    int select = 0;
-    do
-    {
+    int select;
         cout << endl;
-        cout << "Menu | Select options" << endl;
+        cout << "Select type of search: " << endl;
         cout << "1. Another type " << endl;
         cout << "2. Char " << endl;
-        cout << "0. Exit" << endl;
         cin >> select;
 
 
@@ -86,7 +94,7 @@ void Ex1()
             
             break;
         }
-    } while (select != 0);
+
 }
 
 
@@ -377,20 +385,20 @@ int main() {
     //  Код виконання завдань
     //  Головне меню завдань
     //  Функції та класи можуть знаходитись в інших файлах проекту
-    int a;
-    cout << "Choose the exercise: ";
-    cin >> a;
-    if (a == 1) {
-        Ex1();
-    }
-    if (a == 2) {
-        Ex2();
-    }
-    if (a == 3) {
-        Ex3();
-    }
-    if (a == 4) {
-        Ex4();
-    }
+    int a, flag=0;
+    cout << "Menu:\n 1) MinElement search\n 2) Binary search\n 3) Matrix class\n 4) List class\n 5) Exit\n";
+    ;
+    do {
+        cout << "\nChoose the exercise: ";
+        cin >> a;
+        switch (a) {
+        case 1: Ex1(); break;
+        case 2: Ex2(); break;
+        case 3: Ex3(); break;
+        case 4: Ex4(); break;
+        case 5: flag = 1; break;
+        }
+    } while (flag != 1);
     return 0;
+    
 }
